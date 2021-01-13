@@ -19,5 +19,9 @@ call plug#end()
 
 nnoremap <F4> :!g++ %<CR>
 nnoremap <F5> :term ./a.out<CR>
+nnoremap <C-H> :noh<CR>
+nnoremap <C-W> :w<CR>
+nnoremap <C-S> :w<CR>:source %<CR>
+nnoremap <C-Q> :q<CR>
 colorscheme dracula
 hi Normal guibg=NONE ctermbg=NONE
