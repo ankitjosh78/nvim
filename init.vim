@@ -15,6 +15,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'dracula/vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 nnoremap <F4> :!g++ %<CR>
