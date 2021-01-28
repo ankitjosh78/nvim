@@ -4,6 +4,8 @@ set relativenumber
 set noerrorbells
 set ts=4
 set sw=4
+set nobackup
+set incsearch
 set noswapfile
 set termguicolors
 set clipboard=unnamedplus
@@ -15,6 +17,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'dracula/vim'
+Plug 'morhetz/gruvbox'
 Plug 'rbgrouleff/bclose.vim'
 Plug 'ptzz/lf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -29,4 +32,5 @@ nnoremap <C-W> :w<CR>
 nnoremap <C-S> :w<CR>:source %<CR>
 nnoremap <C-Q> :q<CR>
 colorscheme dracula
-hi Normal guibg=NONE ctermbg=NONE
+"if I want to use transparency
+"hi Normal guibg=NONE ctermbg=NONE 
