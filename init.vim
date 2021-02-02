@@ -4,6 +4,7 @@ set relativenumber
 set noerrorbells
 set ts=4
 set sw=4
+set ai ts=4 sw=4 et
 set nobackup
 set incsearch
 set noswapfile
@@ -20,7 +21,10 @@ Plug 'dracula/vim'
 Plug 'morhetz/gruvbox'
 Plug 'rbgrouleff/bclose.vim'
 Plug 'ptzz/lf.vim'
+Plug 'tomasiser/vim-code-dark'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'rust-lang/rust.vim'
+Plug 'vimwiki/vimwiki'
 call plug#end()
 
 nnoremap <leader>f :Lf<CR>
@@ -31,6 +35,6 @@ nnoremap <C-H> :noh<CR>
 nnoremap <C-W> :w<CR>
 nnoremap <C-S> :w<CR>:source %<CR>
 nnoremap <C-Q> :q<CR>
-colorscheme dracula
+colorscheme gruvbox
 "if I want to use transparency
 "hi Normal guibg=NONE ctermbg=NONE 
