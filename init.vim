@@ -12,7 +12,6 @@ set noswapfile
 set clipboard=unnamedplus
 set smartindent
 set autoindent
-set ignorecase
 set laststatus=2
 set noshowmode
 set termguicolors
@@ -34,6 +33,7 @@ Plug 'ayu-theme/ayu-vim'
 Plug 'rakr/vim-one'
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'itchyny/lightline.vim'
+Plug 'tomasr/molokai'
 call plug#end()
 
 "Key mappings
@@ -48,13 +48,15 @@ nnoremap <C-c><C-d> :CocDisable<CR>
 nnoremap <C-S> :w<CR>:source %<CR>
 nnoremap <C-Q> :q<CR>
 
+let g:molokai_original = 1
+let g:lightline = {
+      \ 'colorscheme': 'molokai',
+      \ }
+"let g:rehash256 = 1
+
 "setting colorscheme
 set background=dark
-colorscheme palenight
-
-""Colorscheme options
-let g:palenight_terminal_italics=1
-let g:lightline = { 'colorscheme': 'palenight' }
+colorscheme molokai
 
 "if I want to use transparency
 "hi Normal guibg=NONE ctermbg=NONE 
