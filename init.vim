@@ -42,7 +42,6 @@ nnoremap <leader>t :terminal<CR>
 nnoremap <F4> :!g++ %<CR>
 nnoremap <F5> :term ./a.out<CR>
 nnoremap <C-H> :noh<CR>
-nnoremap <C-W> :w<CR>
 nnoremap <C-c><C-e> :CocEnable<CR>
 nnoremap <C-c><C-d> :CocDisable<CR>
 nnoremap <C-S> :w<CR>:source %<CR>
