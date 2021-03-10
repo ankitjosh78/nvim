@@ -16,10 +16,11 @@ set laststatus=2
 set noshowmode
 set termguicolors
 
-
 "Plugings
 call plug#begin('~/.vim/plugged')
 Plug 'dracula/vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'morhetz/gruvbox'
 Plug 'rbgrouleff/bclose.vim'
 Plug 'ptzz/lf.vim'
@@ -46,7 +47,11 @@ nnoremap <C-c><C-e> :CocEnable<CR>
 nnoremap <C-c><C-d> :CocDisable<CR>
 nnoremap <C-S> :w<CR>:source %<CR>
 nnoremap <C-Q> :q<CR>
+nnoremap <C-P> :Rg<CR>
+nnoremap <C-F> :Lines<CR>
 
+
+"Plugings' settings
 let g:molokai_original = 1
 let g:lightline = {
       \ 'colorscheme': 'molokai',
