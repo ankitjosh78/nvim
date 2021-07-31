@@ -17,12 +17,16 @@ set autoindent
 set laststatus=2
 set noshowmode
 set termguicolors
+set showtabline=2
 
 
 "Plugings
 call plug#begin('~/.vim/plugged')
 Plug 'mhartington/oceanic-next'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
 Plug 'turbio/bracey.vim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'fannheyward/telescope-coc.nvim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'dracula/vim'
 Plug 'dylanaraps/wal.vim'
@@ -31,7 +35,6 @@ Plug 'preservim/nerdtree'
 Plug 'junegunn/fzf.vim'
 Plug 'morhetz/gruvbox'
 Plug 'rbgrouleff/bclose.vim'
-Plug 'ptzz/lf.vim'
 Plug 'tomasiser/vim-code-dark'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-fugitive'
@@ -44,26 +47,37 @@ Plug 'rakr/vim-one'
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'tomasr/molokai'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 call plug#end()
 
 "Key mappings
 let mapleader = " "
 nnoremap <leader>t :terminal<CR>
-autocmd filetype cpp nnoremap <F4> :!g++ -std=c++14 %<CR>
+autocmd filetype cpp nnoremap <F4> :!g++ -g -O2 -std=gnu++17 -static  %<CR>
 autocmd filetype cpp nnoremap <F5> :term ./a.out<CR>
 nnoremap <C-H> :noh<CR>
 nnoremap <C-c><C-e> :CocEnable<CR>
 nnoremap <C-c><C-d> :CocDisable<CR>
-nnoremap <C-S> :w<CR>:source %<CR>
-nnoremap <C-Q> :q<CR>
-nnoremap <C-P> :Rg<CR>
-nnoremap <C-F> :Files<CR>
-nnoremap <C-B> :Buffers<CR>
+nnoremap <C-S> :w<CR>:so %<CR>
 inoremap { {}<Left>
 inoremap {<CR> {<CR>}<Esc>O
 inoremap {{ {
 inoremap {} {}
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>ds <cmd>Telescope coc document_symbols<cr>
+nnoremap <leader>fa <cmd>Telescope coc file_code_actions<cr>
+nnoremap <leader>fc <cmd>Telescope coc commands<cr>
+nnoremap <leader>fb <cmd>Telescope file_browser<cr>
+nnoremap <leader>fp <cmd>Telescope live_grep<cr>
+nnoremap <leader>fg <cmd>Telescope git_commits<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>en <cmd>Telescope find_files cwd=~/.config<cr>
 nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap n nzzzv
+nnoremap N Nzzzv
 
 
 "Pluging settings
@@ -81,3 +95,29 @@ colorscheme gruvbox
 "if I want to use transparency
 hi Normal guibg=NONE ctermbg=NONE 
 
+lua << EOF
+require('telescope').setup{
+  defaults = {
+    prompt_prefix = "$ ",
+    }
+}
+require('telescope').load_extension('fzf')
+require('telescope').load_extension('coc')
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+  },
+    indent = {
+        enable = true
+      },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "gnn",
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
+    },
+  },
+}
+EOF
