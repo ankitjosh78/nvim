@@ -35,6 +35,8 @@ nnoremap <leader>fp <cmd>Telescope live_grep<cr>
 nnoremap <leader>fg <cmd>Telescope git_commits<cr>
 nnoremap <leader>en <cmd>Telescope find_files cwd=~/.config<cr>
 nnoremap <leader>ds <cmd>Telescope coc document_symbols<cr>
+nnoremap n nzzzv
+nnoremap N Nzzzv
 
 call plug#begin()
 Plug 'morhetz/gruvbox'
