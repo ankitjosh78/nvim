@@ -32,11 +32,9 @@ inoremap {} {}
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fb <cmd>Telescope file_browser<cr>
 nnoremap <leader>fp <cmd>Telescope live_grep<cr>
-nnoremap <leader>fg <cmd>Telescope git_commits<cr>
+nnoremap <leader>fg <cmd>Telescope git_files<cr>
 nnoremap <leader>en <cmd>Telescope find_files cwd=~/.config<cr>
 nnoremap <leader>ds <cmd>Telescope coc document_symbols<cr>
-nnoremap n nzzzv
-nnoremap N Nzzzv
 
 call plug#begin()
 Plug 'morhetz/gruvbox'
@@ -47,7 +45,6 @@ Plug 'rbgrouleff/bclose.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'nvim-lua/popup.nvim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'stevearc/vim-arduino'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  
@@ -57,35 +54,42 @@ Plug 'thosakwe/vim-flutter'
 Plug 'SirVer/ultisnips'
 Plug 'natebosch/dartlang-snippets'
 Plug 'honza/vim-snippets'
-Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'nvim-telescope/telescope-fzy-native.nvim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'fannheyward/telescope-coc.nvim'
-Plug 'github/copilot.vim'
 call plug#end()
 
 let g:gruvbox_italic=1
+let g:gruvbox_contrast_dark = 'hard'
+let g:gruvbox_invert_selection='0'
 let g:airline#extensions#tabline#enabled = 1
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:airline_powerline_fonts = 1
 set background=dark
 colorscheme gruvbox
+hi TelescopeBorder guifg=#5eacd
+
 
 lua << EOF
 require('telescope').setup{
   defaults = {
-    prompt_prefix = "$ ",
-    }
+    file_sorter = require("telescope.sorters").get_fzy_sorter,
+    prompt_prefix = " >",
+    color_devicons = true,
+
+    file_previewer = require("telescope.previewers").vim_buffer_cat.new,
+    grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
+    qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
+    },
+    extensions = {
+        fzy_native = {
+            override_generic_sorter = false,
+            override_file_sorter = true,
+        },
+    },
 }
-require('telescope').load_extension('fzf')
+require('telescope').load_extension('fzy_native')
 require('telescope').load_extension('coc')
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-  },
-    indent = {
-        enable = true
-      },
-}
 EOF
 
