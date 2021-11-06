@@ -10,6 +10,7 @@ set nobackup
 set incsearch
 set hlsearch
 set noswapfile
+filetype plugin on
 set clipboard+=unnamedplus
 set smartindent
 set autoindent
