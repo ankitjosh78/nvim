@@ -17,6 +17,7 @@ set laststatus=2
 set noshowmode
 set termguicolors
 set showtabline=2
+set colorcolumn=80
 
 let mapleader = " "
 nnoremap <leader>t :terminal<CR>
@@ -38,6 +39,7 @@ nnoremap <leader>ds <cmd>Telescope coc document_symbols<cr>
 
 call plug#begin()
 Plug 'morhetz/gruvbox'
+Plug 'Rigellute/shades-of-purple.vim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'ryanoasis/vim-devicons'
@@ -51,24 +53,26 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'preservim/nerdtree'
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'thosakwe/vim-flutter'
-Plug 'SirVer/ultisnips'
 Plug 'natebosch/dartlang-snippets'
 Plug 'honza/vim-snippets'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'fannheyward/telescope-coc.nvim'
+Plug 'vimwiki/vimwiki'
 call plug#end()
 
 let g:gruvbox_italic=1
 let g:gruvbox_contrast_dark = 'hard'
 let g:gruvbox_invert_selection='0'
 let g:airline#extensions#tabline#enabled = 1
-let g:UltiSnipsExpandTrigger="<tab>"
+let g:airline_theme='ayu_dark'
 let g:airline_powerline_fonts = 1
 set background=dark
 colorscheme gruvbox
 hi TelescopeBorder guifg=#5eacd
+highlight Normal guibg=none
+highlight NonText guibg=none
 
 
 lua << EOF
@@ -88,8 +92,8 @@ require('telescope').setup{
             override_file_sorter = true,
         },
     },
+    file_ignore_patters={"wallpapers"}
 }
 require('telescope').load_extension('fzy_native')
 require('telescope').load_extension('coc')
 EOF
-
