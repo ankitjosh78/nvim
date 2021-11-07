@@ -46,6 +46,7 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'rbgrouleff/bclose.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'nvim-telescope/telescope-github.nvim'
 Plug 'nvim-lua/popup.nvim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'vim-airline/vim-airline'
@@ -61,6 +62,8 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'fannheyward/telescope-coc.nvim'
 Plug 'vimwiki/vimwiki'
+Plug 'mfussenegger/nvim-dap'
+Plug 'nvim-telescope/telescope-dap.nvim'
 call plug#end()
 
 let g:gruvbox_italic=1
@@ -97,4 +100,6 @@ require('telescope').setup{
 }
 require('telescope').load_extension('fzy_native')
 require('telescope').load_extension('coc')
+require('telescope').load_extension('gh')
+require('telescope').load_extension('dap')
 EOF
