@@ -1,3 +1,4 @@
+" Vim configurations syntax enable
 syntax enable
 set relativenumber
 set modifiable
@@ -20,6 +21,14 @@ set termguicolors
 set showtabline=2
 set colorcolumn=80
 
+" Autosave folds
+augroup remember_folds
+  autocmd!
+  au BufWinLeave ?* mkview 1
+  au BufWinEnter ?* silent! loadview 1
+augroup END
+
+" Key mappings
 let mapleader = " "
 nnoremap <leader>t :terminal<CR>
 nnoremap <leader>st :Telescope tele_tabby list<CR>
@@ -40,12 +49,7 @@ nnoremap <leader>fg <cmd>Telescope git_files<cr>
 nnoremap <leader>en <cmd>Telescope find_files cwd=~/.config<cr>
 nnoremap <leader>ds <cmd>Telescope coc document_symbols<cr>
 
-augroup remember_folds
-  autocmd!
-  autocmd BufWinLeave * mkview
-  autocmd BufWinEnter * silent! loadview
-augroup END
-
+" Plugins
 call plug#begin()
 Plug 'morhetz/gruvbox'
 Plug 'Rigellute/shades-of-purple.vim'
@@ -75,6 +79,7 @@ Plug 'nvim-telescope/telescope-dap.nvim'
 Plug 'TC72/telescope-tele-tabby.nvim'
 call plug#end()
 
+" Plugins Configurations
 let g:gruvbox_italic=1
 let g:gruvbox_contrast_dark = 'hard'
 let g:gruvbox_invert_selection='0'
@@ -88,13 +93,13 @@ highlight Normal guibg=none
 highlight NonText guibg=none
 
 
+" Lua config
 lua << EOF
 require('telescope').setup{
   defaults = {
     file_sorter = require("telescope.sorters").get_fzy_sorter,
     prompt_prefix = " >",
     color_devicons = true,
-
     file_previewer = require("telescope.previewers").vim_buffer_cat.new,
     grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
     qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
