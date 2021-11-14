@@ -22,7 +22,9 @@ set colorcolumn=80
 
 let mapleader = " "
 nnoremap <leader>t :terminal<CR>
-autocmd filetype cpp nnoremap <F4> :!g++ -g -O2 -std=gnu++17 -static  %<CR>
+nnoremap <leader>st :Telescope tele_tabby list<CR>
+nnoremap <leader>sb :Telescope buffers<CR>
+autocmd filetype cpp nnoremap <F4> :!g++-11 -Wall -O2 -std=c++17 %<CR>
 autocmd filetype cpp nnoremap <F5> :term ./a.out<CR>
 nnoremap <C-H> :noh<CR>
 nnoremap <C-N> :NERDTreeToggle<CR>
@@ -37,6 +39,12 @@ nnoremap <leader>fp <cmd>Telescope live_grep<cr>
 nnoremap <leader>fg <cmd>Telescope git_files<cr>
 nnoremap <leader>en <cmd>Telescope find_files cwd=~/.config<cr>
 nnoremap <leader>ds <cmd>Telescope coc document_symbols<cr>
+
+augroup remember_folds
+  autocmd!
+  autocmd BufWinLeave * mkview
+  autocmd BufWinEnter * silent! loadview
+augroup END
 
 call plug#begin()
 Plug 'morhetz/gruvbox'
@@ -64,6 +72,7 @@ Plug 'fannheyward/telescope-coc.nvim'
 Plug 'vimwiki/vimwiki'
 Plug 'mfussenegger/nvim-dap'
 Plug 'nvim-telescope/telescope-dap.nvim'
+Plug 'TC72/telescope-tele-tabby.nvim'
 call plug#end()
 
 let g:gruvbox_italic=1
@@ -96,7 +105,7 @@ require('telescope').setup{
             override_file_sorter = true,
         },
     },
-    file_ignore_patters={"wallpapers"}
+    file_ignore_patterns = { "%.env", "%.mov", "%.png", "%.jpg", "%.mkv", "%.mp4", "%.ttf" }
 }
 require('telescope').load_extension('fzy_native')
 require('telescope').load_extension('coc')
