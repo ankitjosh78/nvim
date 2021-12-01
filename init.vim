@@ -1,12 +1,12 @@
 " Vim configurations syntax enable
 syntax enable
 set relativenumber
-set modifiable
+set buftype=
 set noerrorbells
 set hidden
-set ts=4
-set sw=4
-set ai ts=4 sw=4 et
+set ts=2
+set sw=2
+set ai ts=2 sw=2 et
 set nobackup
 set incsearch
 set hlsearch
@@ -20,6 +20,7 @@ set noshowmode
 set termguicolors
 set showtabline=2
 set colorcolumn=80
+set updatetime=300
 
 " Autosave folds
 augroup remember_folds
@@ -30,29 +31,43 @@ augroup END
 
 " Key mappings
 let mapleader = " "
-nnoremap <leader>t :terminal<CR>
-nnoremap <leader>st :Telescope tele_tabby list<CR>
-nnoremap <leader>sb :Telescope buffers<CR>
+nnoremap <leader>t <cmd>lua require('telescope.builtin')()<CR>
+nnoremap <leader>af <cmd>Neoformat<CR>
+nnoremap <leader>st <cmd>lua require('telescope').extensions.tele_tabby.list(require('telescope.themes').get_dropdown())<CR>
+nnoremap <leader>sb <cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown())<CR>
+nnoremap <leader>bw <cmd>bwipeout<CR>
+nnoremap <leader>bp <cmd>bprev<CR>
+nnoremap <leader>bn <cmd>bnext<CR>
 autocmd filetype cpp nnoremap <F4> :!g++-11 -Wall -O2 -std=c++17 %<CR>
 autocmd filetype cpp nnoremap <F5> :term ./a.out<CR>
-nnoremap <C-H> :noh<CR>
+autocmd filetype cpp nnoremap <F3> :!cp template.cpp % <CR>
+nnoremap <C-H> :nohl<CR>
 nnoremap <C-N> :NERDTreeToggle<CR>
 nnoremap <C-S> :w<CR>:so %<CR>
 inoremap { {}<Left>
 inoremap {<CR> {<CR>}<Esc>O
 inoremap {{ {
 inoremap {} {}
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fb <cmd>Telescope file_browser<cr>
-nnoremap <leader>fp <cmd>Telescope live_grep<cr>
-nnoremap <leader>fg <cmd>Telescope git_files<cr>
-nnoremap <leader>en <cmd>Telescope find_files cwd=~/.config<cr>
-nnoremap <leader>ds <cmd>Telescope coc document_symbols<cr>
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').file_browser()<cr>
+nnoremap <leader>fp <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').git_files()<cr>
+nnoremap <leader>en <cmd>lua require('telescope.builtin').find_files({cwd="~/.config"})<cr>
+nnoremap <leader>ds <cmd>lua require('telescope').extensions.coc.document_symbols({})<cr>
+nnoremap <C-_> :lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 " Plugins
 call plug#begin()
 Plug 'morhetz/gruvbox'
 Plug 'Rigellute/shades-of-purple.vim'
+Plug 'tomasr/molokai'
+Plug 'sbdchd/neoformat'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'ryanoasis/vim-devicons'
@@ -77,32 +92,36 @@ Plug 'vimwiki/vimwiki'
 Plug 'mfussenegger/nvim-dap'
 Plug 'nvim-telescope/telescope-dap.nvim'
 Plug 'TC72/telescope-tele-tabby.nvim'
+Plug 'ayu-theme/ayu-vim'
+Plug 'sainnhe/gruvbox-material'
 call plug#end()
 
 " Plugins Configurations
 let g:gruvbox_italic=1
-let g:gruvbox_contrast_dark = 'hard'
+let g:gruvbox_contrast_dark = 'medium'
+let g:gruvbox_material_background = 'medium'
 let g:gruvbox_invert_selection='0'
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='ayu_dark'
+let g:airline_theme='gruvbox_material'
+let g:molokai_original = 1
 let g:airline_powerline_fonts = 1
 set background=dark
-colorscheme gruvbox
+colorscheme gruvbox-material
 hi TelescopeBorder guifg=#5eacd
-highlight Normal guibg=none
-highlight NonText guibg=none
-
+"highlight Normal guibg=none
+"highlight NonText guibg=none
 
 " Lua config
 lua << EOF
 require('telescope').setup{
   defaults = {
     file_sorter = require("telescope.sorters").get_fzy_sorter,
-    prompt_prefix = " >",
+    prompt_prefix = "🔍",
     color_devicons = true,
     file_previewer = require("telescope.previewers").vim_buffer_cat.new,
     grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
     qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
+    file_ignore_patterns = { "%.env", "%.mov", "%.png", "%.jpg", "%.mkv", "%.mp4", "%.ttf","%.out","node_modules",}
     },
     extensions = {
         fzy_native = {
@@ -110,7 +129,6 @@ require('telescope').setup{
             override_file_sorter = true,
         },
     },
-    file_ignore_patterns = { "%.env", "%.mov", "%.png", "%.jpg", "%.mkv", "%.mp4", "%.ttf" }
 }
 require('telescope').load_extension('fzy_native')
 require('telescope').load_extension('coc')
