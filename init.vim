@@ -1,12 +1,10 @@
 " Vim configurations syntax enable
-syntax enable
+syntax on
 set relativenumber
 set buftype=
 set noerrorbells
 set hidden
-set ts=2
-set sw=2
-set ai ts=2 sw=2 et
+set ts=2 shiftwidth=2 expandtab
 set nobackup
 set incsearch
 set hlsearch
@@ -31,13 +29,11 @@ augroup END
 
 " Key mappings
 let mapleader = " "
-nnoremap <leader>t <cmd>lua require('telescope.builtin')()<CR>
-nnoremap <leader>af <cmd>Neoformat<CR>
 nnoremap <leader>st <cmd>lua require('telescope').extensions.tele_tabby.list(require('telescope.themes').get_dropdown())<CR>
 nnoremap <leader>sb <cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown())<CR>
 nnoremap <leader>bw <cmd>bwipeout<CR>
-nnoremap <leader>bp <cmd>bprev<CR>
-nnoremap <leader>bn <cmd>bnext<CR>
+nnoremap <leader>p <cmd>bprev<CR>
+nnoremap <leader>n <cmd>bnext<CR>
 autocmd filetype cpp nnoremap <F4> :!g++-11 -Wall -O2 -std=c++17 %<CR>
 autocmd filetype cpp nnoremap <F5> :term ./a.out<CR>
 autocmd filetype cpp nnoremap <F3> :!cp template.cpp % <CR>
@@ -52,8 +48,12 @@ nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>fb <cmd>lua require('telescope.builtin').file_browser()<cr>
 nnoremap <leader>fp <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>fg <cmd>lua require('telescope.builtin').git_files()<cr>
+nnoremap <leader>gc <cmd>lua require('telescope.builtin').git_commits()<cr>
+nnoremap <leader>gb <cmd>lua require('telescope.builtin').git_branches()<cr>
+nnoremap <leader>gs <cmd>lua require('telescope.builtin').git_status()<cr>
 nnoremap <leader>en <cmd>lua require('telescope.builtin').find_files({cwd="~/.config"})<cr>
 nnoremap <leader>ds <cmd>lua require('telescope').extensions.coc.document_symbols({})<cr>
+nnoremap <leader>cc <cmd>lua require('telescope').extensions.coc.commands({})<cr>
 nnoremap <C-_> :lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
@@ -65,9 +65,10 @@ nmap <silent> gr <Plug>(coc-references)
 " Plugins
 call plug#begin()
 Plug 'morhetz/gruvbox'
+Plug 'nvim-treesitter/playground'
 Plug 'Rigellute/shades-of-purple.vim'
+Plug 'numToStr/Comment.nvim'
 Plug 'tomasr/molokai'
-Plug 'sbdchd/neoformat'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'ryanoasis/vim-devicons'
@@ -99,7 +100,7 @@ call plug#end()
 " Plugins Configurations
 let g:gruvbox_italic=1
 let g:gruvbox_contrast_dark = 'medium'
-let g:gruvbox_material_background = 'medium'
+let g:gruvbox_material_background = 'hard'
 let g:gruvbox_invert_selection='0'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='gruvbox_material'
@@ -121,7 +122,7 @@ require('telescope').setup{
     file_previewer = require("telescope.previewers").vim_buffer_cat.new,
     grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
     qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
-    file_ignore_patterns = { "%.env", "%.mov", "%.png", "%.jpg", "%.mkv", "%.mp4", "%.ttf","%.out","node_modules",}
+    file_ignore_patterns = {"Library","Movies","Pictures","Music", "%.env", "%.mov", "%.png","%.pdf", "%.jpg", "%.mkv", "%.mp4", "%.ttf","%.out","node_modules",}
     },
     extensions = {
         fzy_native = {
@@ -134,4 +135,7 @@ require('telescope').load_extension('fzy_native')
 require('telescope').load_extension('coc')
 require('telescope').load_extension('gh')
 require('telescope').load_extension('dap')
+require('Comment').setup()
 EOF
+
+
