@@ -66,6 +66,7 @@ nmap <silent> gr <Plug>(coc-references)
 call plug#begin()
 Plug 'morhetz/gruvbox'
 Plug 'nvim-treesitter/playground'
+Plug 'edkolev/tmuxline.vim'
 Plug 'Rigellute/shades-of-purple.vim'
 Plug 'numToStr/Comment.nvim'
 Plug 'tomasr/molokai'
@@ -82,7 +83,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  
 Plug 'preservim/nerdtree'
 Plug 'dart-lang/dart-vim-plugin'
-Plug 'thosakwe/vim-flutter'
+"Plug 'thosakwe/vim-flutter'
 Plug 'natebosch/dartlang-snippets'
 Plug 'honza/vim-snippets'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
@@ -90,8 +91,8 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'fannheyward/telescope-coc.nvim'
 Plug 'vimwiki/vimwiki'
-Plug 'mfussenegger/nvim-dap'
-Plug 'nvim-telescope/telescope-dap.nvim'
+"Plug 'mfussenegger/nvim-dap'
+"Plug 'nvim-telescope/telescope-dap.nvim'
 Plug 'TC72/telescope-tele-tabby.nvim'
 Plug 'ayu-theme/ayu-vim'
 Plug 'sainnhe/gruvbox-material'
@@ -134,7 +135,6 @@ require('telescope').setup{
 require('telescope').load_extension('fzy_native')
 require('telescope').load_extension('coc')
 require('telescope').load_extension('gh')
-require('telescope').load_extension('dap')
 require('Comment').setup()
 EOF
 
